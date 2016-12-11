@@ -1,0 +1,35 @@
+{
+  "name": "gateau",
+  "version": "0.1.0",
+  "description": "Design your content with live previewing",
+  "private": true,
+  "scripts": {
+    "build": "nwb build-react-app",
+    "clean": "nwb clean-app",
+    "start": "nwb serve-react-app",
+    "test": "nwb test",
+    "test:coverage": "nwb test --coverage",
+    "test:watch": "nwb test --server"
+  },
+  "dependencies": {
+    "creed": "^1.0.3",
+    "lodash": "^4.14.1",
+    "mobx": "^2.5.2",
+    "mobx-react": "^3.5.6",
+    "ramda": "^0.21.0",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-frame-component": "^0.6.2",
+    "react-icons": "^2.2.1",
+    "react-seeds": "^0.4.0-b5",
+    "react-sow": "^0.3.0-b4",
+    "royal-piping": "^0.2.0",
+    "spectacle": "^1.1.2"
+  },
+  "devDependencies": {
+    "nwb": "0.12.x"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": ""
+}

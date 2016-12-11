@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Royal Icing</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+<style>
+html {
+	height: 100%;
+	background-color: #fdfdfd;
+}
+html, h1, input, button {
+	font-family: 'Lato', sans-serif;
+}
+body {
+	height: 100%;
+	margin: 0;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.rows {
+	display: flex;
+	flex-direction: column;
+}
+.columns {
+	display: flex;
+	flex-direction: row;
+}
+
+#primary-section {
+	
+}
+#primary-section article > h2 {
+	margin: 1em;
+	text-align: left;
+}
+#primary-section article > .gateau + h2 {
+	margin-top: 1.5em;
+}
+
+#header {
+	flex-shrink: 0;
+	min-height: 42px;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	background-color: #303030;
+}
+#header h1 {
+	margin: 0;
+	padding-right: 1rem;
+	font-size: 1.5rem;
+	line-height: 2.4;
+}
+#header h1 a {
+	color: white;
+	font-style: italic;
+	text-decoration: none;
+}
+#header h1 a:hover {
+	text-decoration: underline;
+}
+#subscribe {
+	flex-grow: 1;
+}
+
+#app {
+	flex-grow: 1;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BEGIN -->
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-12168665-5', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<section id="primary-section" class="rows">
+	<header id="header" class="columns">
+		<h1><a href="https://twitter.com/RoyalIcing">@royalicing</a></h1>
+		<div id="subscribe">
+			<script async id="_ck_81556" src="https://forms.convertkit.com/81556?v=6"></script>
+		</div>
+	</header>
+
+<div>
+
+<article class="">
+<h2>Create Bootstrap & Foundation prototypes with #hashtags</h2>
+<div class="gateau" data-destination="bootstrap">
+<div class="gateau_content">
+Just add hashtags! #primary
+
+Prototype web layouts just by typing #image #unsplash: dessert
+
+Create fields #field
+And Buttons #button #primary
+Large and… #button #large
+Small #button #small
+
+Features #link: @links.features
+
+#columns: 2
+- #image #unsplash: jungle
+- #image #unsplash: forest
+- #image #unsplash: beach
+- #image #unsplash: waterfall
+
+@legal #small
+</div>
+<script type='gateau' class="gateau_ingredients">
+[
+	{
+		"id": "links",
+		"type": "json",
+		"variations": [
+			{
+				"rawContent": "{\"features\": \"https://icing.space/features\"}"
+			}
+		]
+	},
+	{
+		"id": "legal",
+		"type": "text",
+		"variations": [
+			{
+				"rawContent": "Copyright Company Inc. 2016"
+			}
+		]
+	}
+]
+</script>
+<script type='gateau' class="gateau_scenarios">
+[
+	{
+		"links": 0,
+		"legal": 0
+	}
+]
+</script>
+</div>
+</article>
+
+<article class="">
+<h2>Or preview as wireframes</h2>
+<div class="gateau" data-destination="piping">
+<div class="gateau_content">
+Just add hashtags! #primary
+
+Prototype web layouts just by typing #image #unsplash: dessert
+
+Create fields #field
+And Buttons #button #primary
+Large and… #button #large
+Small #button #small
+
+Features #link: @links.features
+
+@legal #small
+</div>
+<script type='gateau' class="gateau_ingredients">
+[
+	{
+		"id": "links",
+		"type": "json",
+		"variations": [
+			{
+				"rawContent": "{\"features\": \"https://icing.space/features\"}"
+			}
+		]
+	},
+	{
+		"id": "legal",
+		"type": "text",
+		"variations": [
+			{
+				"rawContent": "Copyright Company Inc. 2016"
+			}
+		]
+	}
+]
+</script>
+<script type='gateau' class="gateau_scenarios">
+[
+	{
+		"links": 0,
+		"legal": 0
+	}
+]
+</script>
+</div>
+</article>
+
+<article class="">
+<h2>Even copy React code</h2>
+<div class="gateau" data-destination="reactCode">
+<div class="gateau_content">
+Just add hashtags! #primary
+
+Prototype web layouts just by typing #image #unsplash: dessert
+
+Create fields #field
+And Buttons #button #primary
+Large and… #button #large
+Small #button #small
+
+Features #link: @links.features
+
+@legal #small
+</div>
+</div>
+</article>
+
+<article class="">
+<h2>Create Action Stories</h2>
+<div class="gateau" data-destination="piping">
+<div class="gateau_content">
+Subscribe #link
+
+First name #field
+Last name #field
+Subscribe #button
+
+@welcomeMessage #email
+</div>
+<script type='gateau' class="gateau_ingredients">
+[
+	{
+		"id": "welcomeMessage",
+		"type": "text",
+		"variations": [
+			{
+				"rawContent": "Welcome to the best baking newsletter in the world!\n\nWe send tips on creating amazing desserts every week."
+			}
+		]
+	}
+]
+</script>
+</div>
+</article>
+
+</div>
+
+</section>
+
+<!-- END -->
+
+</body>
+
+</html>
