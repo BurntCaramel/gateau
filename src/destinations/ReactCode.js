@@ -8,7 +8,8 @@ import { renderTreeUsing } from './render'
 const Code = ({ children, indent = 0 }) => (
 	<Seed Component='pre'
 		grow={ 1 } width='100%'
-		text={{ align: 'left', whitespace: 'pre-wrap' }}
+		text={{ align: 'left', whitespace: 'pre-wrap', color: 'white' }}
+		background={{ color: '#191919' }}
 	>
 	{ R.repeat('  ', indent) }
 	{ children }

@@ -34,6 +34,15 @@ export const sourceField = ({
 	border: { width: 1, style: 'solid', color: colors.source.border }
 })
 
+export const recordField = ({
+	width: '100%',
+	padding: '0.5rem',
+	font: { size: 16 },
+	//text: { color: colors.light },
+	background: { color: colors.lightKeyB },
+	border: 'none'
+})
+
 export const markdownField = ({
 	column: true,
 	width: '100%',

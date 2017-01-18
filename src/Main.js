@@ -103,6 +103,7 @@ export default observer(React.createClass({
     return (
 			<Seed row justifyContent='center'
 				grow={ 0 } shrink={ 0 }
+				background={{ color: '#191919' }}
 			>
 				<Seed row
 					grow={ 1 } shrink={ 2 }
