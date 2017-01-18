@@ -7,6 +7,7 @@ import Button from '../ui/Button'
 import Field from '../ui/Field'
 import Choice from '../ui/Choice'
 import Tabs from '../ui/Tabs'
+import RecordEditor from '../record/RecordEditor' 
 import * as stylers from '../stylers'
 
 const types = [
@@ -74,7 +75,19 @@ const VariationTabs = ({ selectedIndex, count, onSelect, onAdd }) => (
 	/>
 )
 
+function ValidatingRecordEditor({ jsonString }) {
+	try {
+		return (
+			<RecordEditor object={ JSON.parse(jsonString) } grow={ 1 } />
+		)
+	}
+	catch (error) {
+		return <noscript />
+	}
+}
+
 const Brick = observer(function Brick({
+	type,
 	info,
 	ingredientIndex
 }) {
@@ -88,13 +101,17 @@ const Brick = observer(function Brick({
 					info.toggleEnabled()
 				}}
 			/>
-			<Field grow={ 1 }
-				value={ info.rawContent }
-				onChange={(newRawContent) => {
-					info.rawContent = newRawContent
-				}}
-				{ ...stylers.ingredientContentField({ error: info.result.error }) }
-			/>
+			{ (type === 'json') ? (
+				<ValidatingRecordEditor jsonString={ info.rawContent } />
+			) : (
+				<Field grow={ 1 }
+					value={ info.rawContent }
+					onChange={(newRawContent) => {
+						info.rawContent = newRawContent
+					}}
+					{ ...stylers.ingredientContentField({ error: info.result.error }) }
+				/>
+			) }
 			<Button
 				width='1.35rem'
 				children='···'
@@ -150,6 +167,7 @@ const Item = observer(function Item({
 			{
 				variations.map((info, index) => (
 					<Brick
+						type={ type }
 						info={ info }
 						ingredientIndex={ ingredientIndex }
 					/>
