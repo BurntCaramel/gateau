@@ -1,10 +1,20 @@
 {
   "name": "gateau",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Design your content with live previewing",
-  "private": true,
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "browser": "umb/gateau.js",
+  "files": [
+    "lib",
+    "es",
+    "umd",
+    "dist"
+  ],
   "scripts": {
-    "build": "nwb build-react-app",
+    "build:app": "nwb build-react-app",
+    "build:lib": "nwb build-react-component",
+    "build:rollup": "rollup -c rollup.config.js",
     "clean": "nwb clean-app",
     "start": "nwb serve-react-app",
     "test": "nwb test",
@@ -27,9 +37,12 @@
     "spectacle": "^1.1.2"
   },
   "devDependencies": {
-    "nwb": "0.12.x"
+    "nwb": "^0.14.1",
+    "rollup": "^0.41.4",
+    "rollup-plugin-buble": "^0.15.0",
+    "rollup-plugin-node-resolve": "^2.0.0"
   },
-  "author": "",
+  "author": "Patrick Smith <patrick@burntcaramel.com>",
   "license": "MIT",
-  "repository": ""
+  "repository": "git@github.com:RoyalIcing/gateau.git"
 }
