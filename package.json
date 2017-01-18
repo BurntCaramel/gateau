@@ -1,10 +1,10 @@
 {
   "name": "gateau",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Design your content with live previewing",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "browser": "umb/gateau.js",
+  "browser": "umd/gateau.js",
   "files": [
     "lib",
     "es",
