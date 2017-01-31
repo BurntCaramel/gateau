@@ -20,7 +20,8 @@ import createObservableState from './state'
 export default observer(React.createClass({
 	getDefaultProps() {
 		return {
-			showTree: false
+			showTree: false,
+			backgroundColor: '#191919'
 		}
 	},
 
@@ -37,6 +38,13 @@ export default observer(React.createClass({
 		this.onFullDestination = action(() => {
 			this.props.stateManager.destinationDevice = 'full'
 		})
+	},
+
+	onSetUpMainField(component) {
+		const el = findDOMNode(component)
+		if (el) {
+			el.focus()
+		}
 	},
 
 	onClickDrag({ type, currentTarget, target, clientX }) {
@@ -62,7 +70,11 @@ export default observer(React.createClass({
 	},
 
 	render() {
-		const { showTree, stateManager } = this.props
+		const {
+			showTree,
+			stateManager,
+			backgroundColor
+		} = this.props
 		const {
 			content,
 			contentTree,
@@ -83,7 +95,7 @@ export default observer(React.createClass({
 		return (
 			<Seed row justifyContent='center'
 				grow={ 0 } shrink={ 0 }
-				background={{ color: '#191919' }}
+				background={{ color: backgroundColor }}
 			>
 				<Seed row
 					grow={ 1 } shrink={ 2 }
@@ -98,6 +110,7 @@ export default observer(React.createClass({
 						{ ...stylers.mainColumn }
 					>
 						<Field
+							ref={ this.onSetUpMainField }
 							value={ content }
 							onChange={ this.onSourceChange  }
 							{ ...stylers.sourceField }
