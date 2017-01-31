@@ -132,7 +132,6 @@ export default function createObservableStateManager({
 				ingredients: toJS(this.ingredients)
 			}
 		},
-
 		set json({ body = '', ingredients = [] }) {
 			this.content = body
 			this.ingredients = ingredients.map(createObservableIngredient)
