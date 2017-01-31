@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { extendObservable, observable, action } from 'mobx'
+import { extendObservable, observable, action, toJS } from 'mobx'
 
 import { parseInput } from '../parser'
 import validateContent, { transformerForType, stringRepresenterForType } from '../ingredients/validateContent'
@@ -110,47 +110,59 @@ function createObservableIngredient(target) {
 	})
 }
 
-export default function createObservableState({
-	content,
-	allIngredients,
-	scenarios,
-	activeScenarioIndex,
-	destinationID,
-	destinationDevice
-}) {
-	const target = this
-	return extendObservable(target, {
+export default function createObservableStateManager({
+	content = '',
+	destinationID = 'foundation',
+	destinationDevice = 'phone',
+	ingredients = [],
+	scenarios = [{}],
+	activeScenarioIndex = 0
+} = {}) {
+	return extendObservable({}, {
 		content,
+		destinationID,
+		destinationDevice,
+		ingredients: ingredients.map(createObservableIngredient),
+		scenarios,
+		activeScenarioIndex,
+
+		get json() {
+			return {
+				body: this.content,
+				ingredients: toJS(this.ingredients)
+			}
+		},
+
+		set json({ body = '', ingredients = [] }) {
+			this.content = body
+			this.ingredients = ingredients.map(createObservableIngredient)
+		},
+
 		get contentTree() {
 			return parseInput(this.content)
 		},
-		allIngredients: allIngredients.map(createObservableIngredient),
-		scenarios,
-		activeScenarioIndex,
-		destinationID,
-		destinationDevice,
 		get activeScenario() {
 			return this.scenarios[this.activeScenarioIndex]
 		},
 		get activeIngredients() {
 			const activeScenario = this.activeScenario
-			return this.allIngredients.reduce((object, { id, flattenedResult }) => {
+			return this.ingredients.reduce((object, { id, flattenedResult }) => {
 				object[id] = flattenedResult
 				return object
 			}, {})
 		},
 		activeVariationForIngredientAtIndex(index) {
-			const ingredient = this.allIngredients[index]
+			const ingredient = this.ingredients[index]
 			if (ingredient && ingredient.variations.length > 0) {
 				const activeScenario = this.activeScenario
 				return ingredient.variations[R.propOr(0, ingredient.id, activeScenario)]
 			}
 		},
-		addNewIngredient: action(function() {
-			target.allIngredients.push(createObservableIngredient({
+		addNewIngredient: action.bound(function() {
+			this.ingredients.push(createObservableIngredient({
 				id: R.defaultTo(
 					'untitled',
-					suggestReferenceFromTree(target.allIngredients, target.contentTree)
+					suggestReferenceFromTree(this.ingredients, this.contentTree)
 				),
 				type: 'text',
 				variations: [
@@ -160,9 +172,8 @@ export default function createObservableState({
 				]
 			}))
 		}),
-		// Use target to allow prebinding
-		onRemoveIngredientAtIndex: action(function(index) {
-			target.allIngredients.splice(index, 1)
+		onRemoveIngredientAtIndex: action.bound(function(index) {
+			this.ingredients.splice(index, 1)
 		})
 	})
 }

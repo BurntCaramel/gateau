@@ -1,5 +1,6 @@
 import React from 'react'
 import Main from './Main'
+import createStateManager from './createStateManager'
 
 const initialContent = (
 `Just add hashtags #primary
@@ -52,28 +53,29 @@ const scenarios = [
 ]
 
 export default React.createClass({
-	getDefaultProps() {
-		return {
-			initialContent,
-			initialIngredients: [],
-			initialScenarios: []
-		}
-	},
-
-  render() {
+	componentWillMount() {
 		const {
 			initialContent,
 			initialDestinationID,
+			initialDestinationDevice,
 			initialIngredients,
-			initialScenarios
+			initialScenarios,
+			initialActiveScenarioIndex
 		} = this.props
-    return (
-			<Main
-				initialContent={ initialContent }
-				initialDestinationID={ initialDestinationID }
-				initialIngredients={ initialIngredients }
-				initialScenarios={ initialScenarios }
-			/>
+
+		this.stateManager = createStateManager({
+			content: initialContent,
+			ingredients: initialIngredients,
+			destinationID: initialDestinationID,
+			destinationDevice: initialDestinationDevice,
+			scenarios: initialScenarios,
+			activeScenarioIndex: initialActiveScenarioIndex
+		})
+	},
+
+	render() {
+		return (
+			<Main stateManager={ this.stateManager } />
 		)
-  }
+	}
 })

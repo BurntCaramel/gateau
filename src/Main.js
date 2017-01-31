@@ -20,42 +20,22 @@ import createObservableState from './state'
 export default observer(React.createClass({
 	getDefaultProps() {
 		return {
-			showTree: false,
-			initialDestinationID: 'foundation',
-			initialDestinationDevice: 'phone'
+			showTree: false
 		}
 	},
 
 	componentWillMount() {
-		const {
-			initialContent: content,
-			initialIngredients: allIngredients,
-			initialDestinationID: destinationID,
-			initialDestinationDevice: destinationDevice,
-			initialScenarios: scenarios,
-			initialActiveScenarioIndex: activeScenarioIndex = 0
-		} = this.props
-
-		createObservableState.call(this, {
-			content,
-			allIngredients,
-			scenarios,
-			activeScenarioIndex,
-			destinationID,
-			destinationDevice
-		})
-		
-		this.onSourceChange = action((input) => {
-			this.content = input
+		this.onSourceChange = action((content) => {
+			this.props.stateManager.content = content
 		})
 		this.onChangeDestination = action((newDestinationID) => {
-			this.destinationID = newDestinationID
+			this.props.stateManager.destinationID = newDestinationID
 		})
 		this.onPhoneDestination = action(() => {
-			this.destinationDevice = 'phone'
+			this.props.stateManager.destinationDevice = 'phone'
 		})
 		this.onFullDestination = action(() => {
-			this.destinationDevice = 'full'
+			this.props.stateManager.destinationDevice = 'full'
 		})
 	},
 
@@ -81,18 +61,18 @@ export default observer(React.createClass({
 		}
 	},
 
-  render() {
-		const { showTree } = this.props
+	render() {
+		const { showTree, stateManager } = this.props
 		const {
 			content,
 			contentTree,
-			allIngredients,
+			ingredients,
 			activeIngredients,
 			scenarios,
 			activeScenarioIndex,
 			destinationID,
 			destinationDevice
-		} = this
+		} = stateManager
 
 		const scenario = scenarios[activeScenarioIndex]
 
@@ -100,7 +80,7 @@ export default observer(React.createClass({
 		console.dir(contentTree)
 		console.dir(activeIngredients)
 
-    return (
+		return (
 			<Seed row justifyContent='center'
 				grow={ 0 } shrink={ 0 }
 				background={{ color: '#191919' }}
@@ -125,11 +105,11 @@ export default observer(React.createClass({
 					</Seed>
 					<Seed column>
 						<IngredientsEditor
-							ingredients={ allIngredients }
+							ingredients={ ingredients }
 							ingredientIDToVariationIndex={ scenario }
-							onAddNew={ this.addNewIngredient }
-							onRemoveAtIndex={ this.onRemoveIngredientAtIndex }
-							onAddVariationAtIndex={ this.onAddVariationAtIndex }
+							onAddNew={ stateManager.addNewIngredient }
+							onRemoveAtIndex={ stateManager.onRemoveIngredientAtIndex }
+							onAddVariationAtIndex={ stateManager.onAddVariationAtIndex }
 						/>
 					</Seed>
 				</Seed>
@@ -156,5 +136,5 @@ export default observer(React.createClass({
 				/>
 			</Seed>
 		)
-  }
+	}
 }))
