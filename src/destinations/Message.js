@@ -76,8 +76,13 @@ export const commandline = (tags, references, text, children, Element, resolveCo
 	</Seed>
 )
 
+const hasAll = R.pipe(
+	R.map(R.has),
+	R.allPass
+)
+
 export const useWithFallback = (fallback) => R.cond([
-	[ R.has('email'), R.curry(email) ],
+	[ hasAll(['message', 'email']), R.curry(email) ],
 	[ R.has('commandline'), R.curry(commandline) ],
 	[ R.T, fallback ]
 ])
