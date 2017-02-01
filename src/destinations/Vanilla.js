@@ -1,6 +1,6 @@
 import R from 'ramda'
 import React from 'react'
-import { Seed } from 'react-seeds'
+import seeds, { Seed } from 'react-seeds'
 import rgba from 'react-sow/rgba'
 import repeatString from 'lodash/repeat'
 
@@ -62,27 +62,52 @@ export const button = (tags, mentions, title) => (
 )
 export const cta = button
 
-export const choice = (tags, mentions, title, children, Element, resolveContent) => {
-	const hasChildren = children.length > 0
+function ChoiceSelect({ value, title, items }) {
 	return (
-		<Seed Component='label' column>
+		<label { ...seeds({ column: true }) }>
 			<span children={ title } style={{ display: 'block' }} />
 			<Seed Component='select'
-				value={ tags.value }
+				value={ value }
 				shrink={ 0 }
 				maxWidth='20em'
 				font={{ size: 16 }}
 			>
 			{
-				children.map(({ text, tags }) => (
+				items.map(({ text, tags }) => (
 					<option key={ text }
 						value={ text } children={ tags.title || text }
 					/>
 				))
 			}
 			</Seed>
-		</Seed>
+		</label>
 	)
+}
+
+function CheckboxSelect({ value, title }) {
+	return (
+		<label { ...seeds({ text: { align: 'center' } }) }>
+			<input type='checkbox' value={ value } />
+			<span children={ title } />
+		</label>
+	)
+}
+
+export const choice = (tags, mentions, title, children, Element, resolveContent) => {
+	const hasChildren = children.length > 0
+	if (hasChildren) {
+		return <ChoiceSelect
+			value={ tags.value }
+			title={ title }
+			items={ children }
+		/>
+	}
+	else {
+		return <CheckboxSelect
+			value={ tags.value }
+			title={ title }
+		/>
+	}
 }
 
 const wrapForTags = (tags, resolveContent, element) => {
