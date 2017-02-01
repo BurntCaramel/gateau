@@ -107,14 +107,12 @@ export const Preview = renderTreeUsing({ elementRendererForTags })
 export const title = 'Bootstrap'
 
 export function head() {
-	return (
-		<head>
-			<link rel='stylesheet' type='text/css'
-				href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
-			/>
-			<script
-				src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
-			/>
-		</head>
-	)
+	return [
+		<link rel='stylesheet' type='text/css'
+			href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+		/>,
+		<script
+			src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+		/>
+	]
 }

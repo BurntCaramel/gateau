@@ -45,14 +45,12 @@ export const Preview = renderTreeUsing({ elementRendererForTags })
 export const title = 'Foundation'
 
 export function head() {
-	return (
-		<head>
-			<link rel='stylesheet' type='text/css'
-				href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation-flex.min.css'
-			/>
-			<script
-				src='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.js'
-			/>
-		</head>
-	)
+	return [
+		<link rel='stylesheet' type='text/css'
+			href='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation-flex.min.css'
+		/>,
+		<script
+			src='https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.js'
+		/>
+	]
 }

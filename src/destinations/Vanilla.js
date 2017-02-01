@@ -62,27 +62,28 @@ export const button = (tags, mentions, title) => (
 )
 export const cta = button
 
-export const choice = (tags, mentions, title, children, Element, resolveContent) => (
-	<Seed Component='label' column>
-		<span children={ title } style={{ display: 'block' }} /> 
-		<Seed Component='select'
-			value={ tags.value }
-			//onChange={ this.onChange }
-			shrink={ 0 }
-			maxWidth='20em'
-			//padding={{ top: 0, bottom: 0, left: '0.5em', right: '0.5em' }}
-			font={{ size: 16 }}
-		>
-		{
-			children.map(({ text, tags }) => (
-				<option key={ text }
-					value={ text } children={ tags.title || text }
-				/>
-			))
-		}
+export const choice = (tags, mentions, title, children, Element, resolveContent) => {
+	const hasChildren = children.length > 0
+	return (
+		<Seed Component='label' column>
+			<span children={ title } style={{ display: 'block' }} />
+			<Seed Component='select'
+				value={ tags.value }
+				shrink={ 0 }
+				maxWidth='20em'
+				font={{ size: 16 }}
+			>
+			{
+				children.map(({ text, tags }) => (
+					<option key={ text }
+						value={ text } children={ tags.title || text }
+					/>
+				))
+			}
+			</Seed>
 		</Seed>
-	</Seed>
-)
+	)
+}
 
 const wrapForTags = (tags, resolveContent, element) => {
 	if (R.has('link', tags)) {
@@ -364,9 +365,8 @@ export function init() {
 export const title = 'Vanilla Web'
 
 export function head() {
-	return (
-		<head>
-			<style children={`
+	return [
+		<style children={`
 html {
 	height: 100%;
 	background-color: #fdfdfd;
@@ -379,8 +379,7 @@ body {
 	margin: 0;
 }
 `} />
-		</head>
-	)
+	]
 }
 
 export function deinit() {

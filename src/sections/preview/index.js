@@ -101,14 +101,13 @@ export default function PreviewSection({
 					) : (
 						<Frame
 							head={ renderHead() }
-							children={
-								<Preview
-									ingredients={ ingredients }
-									contentTree={ contentTree }
-								/>
-							}
 							{ ...iframeStyler }
-						/>
+						>
+							<Preview
+								ingredients={ ingredients }
+								contentTree={ contentTree }
+							/>
+						</Frame>
 					)	
 				) : null
 			}

@@ -3913,10 +3913,6 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
-
 object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -4603,11 +4599,9 @@ react-dom@^15.2.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-frame-component@0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-0.6.2.tgz#748a7f9deac0693f824eefd28dcee2f9529ffe1a"
-  dependencies:
-    object-assign "^3.0.0"
+react-frame-component:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-1.0.0.tgz#856d7132c83a23fa30303df43acabc68f4b13376"
 
 react-icon-base@2.0.4:
   version "2.0.4"
