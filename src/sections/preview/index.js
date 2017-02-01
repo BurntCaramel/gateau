@@ -3,7 +3,6 @@ import React from 'react'
 import seeds, { Seed } from 'react-seeds'
 import Frame from 'react-frame-component'
 
-import PreviewTabs from './Tabs'
 import Button from '../../ui/Button'
 import Choice from '../../ui/Choice'
 import * as stylers from '../../stylers'
@@ -122,9 +121,6 @@ export default function PreviewSection({
 				onPhoneDestination={ onPhoneDestination }
 				onFullDestination={ onFullDestination }
 			/>
-			{ false &&
-				<PreviewTabs />
-			}
 		</Seed>
 	)
 }
