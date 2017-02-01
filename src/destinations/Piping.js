@@ -22,7 +22,7 @@ const button = (tags, mentions, text) => (
 	/>
 )
 
-const field = (tags, mentions, text) => (
+const field = (tags, mentions, text, children, Element, resolveContent) => (
 	<Seed column
 		grow={ 1 } alignSelf='center' minWidth='12em'
 		margin={{ bottom: '1em' }}
@@ -31,7 +31,9 @@ const field = (tags, mentions, text) => (
 		<Seed
 			grow={ 1 }
 			minHeight={ `1.4em` }
+			padding='0.25em'
 			border={{ width: 1, style: 'solid', color: tone2 }}
+			children={ resolveContent(tags.value) }
 		/>
 	</Seed>
 )
