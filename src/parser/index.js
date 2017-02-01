@@ -25,6 +25,12 @@ export const parseInput = R.pipe(
 			}
 
 			const element = parseElement(body)
+
+			// Skip #research
+			if (element.tags.research) {
+				return items
+			}
+
 			const isChild = prefix != null
 			if (isChild) {
 				if (items.length === 0) {
