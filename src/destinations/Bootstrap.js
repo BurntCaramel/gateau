@@ -104,7 +104,7 @@ const elementRendererForTags = Vanilla.extendTagConds([
 
 export const Preview = renderTreeUsing({ elementRendererForTags })
 
-export const title = 'Bootstrap'
+export const title = 'Bootstrap 3'
 
 export function head() {
 	return [
