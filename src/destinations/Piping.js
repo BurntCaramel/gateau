@@ -92,9 +92,8 @@ export const Preview = R.pipe(
 export const title = 'Piping Wireframes'
 
 export function head() {
-	return (
-		<head>
-			<style children={`
+	return [
+		<style children={`
 html {
 	height: 100%;
 	background-color: #fdfdfd;
@@ -113,6 +112,5 @@ body {
 	padding: 0;
 }
 `} />
-		</head>
-	)
+	]
 }

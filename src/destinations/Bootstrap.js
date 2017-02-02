@@ -108,10 +108,11 @@ export const title = 'Bootstrap 3'
 
 export function head() {
 	return [
-		<link rel='stylesheet' type='text/css'
+		<link key='css'
+			rel='stylesheet' type='text/css'
 			href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
 		/>,
-		<script
+		<script key='js'
 			src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
 		/>
 	]
