@@ -84,7 +84,7 @@ function ChoiceSelect({ value, title, items }) {
 	)
 }
 
-function CheckboxSelect({ value, title }) {
+function ChoiceCheckbox({ value, title }) {
 	return (
 		<label { ...seeds({ text: { align: 'center' } }) }>
 			<input type='checkbox' value={ value } />
@@ -103,7 +103,7 @@ export const choice = (tags, mentions, title, children, Element, resolveContent)
 		/>
 	}
 	else {
-		return <CheckboxSelect
+		return <ChoiceCheckbox
 			value={ tags.value }
 			title={ title }
 		/>
