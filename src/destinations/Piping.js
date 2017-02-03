@@ -11,23 +11,24 @@ import { renderTreeUsing } from './render'
 const tone1 = rgba.whiteValue(200, 1.0)
 const tone2 = rgba.whiteValue(140, 1.0)
 
-const button = (tags, mentions, text) => (
-	<Seed children={ text }
+const button = (tags, mentions, texts) => (
+	<Seed children={ texts }
 		alignSelf='center'
 		padding={{ top: 6, bottom: 6, left: 8, right: 8 }}
 		margin={{ bottom: '0.5em' }}
+		text={{ align: 'center' }}
 		font={{ size: R.has('large', tags) ? 20 : R.has('small', tags) ? 12 : 16 }}
 		background={{ color: tone1 }}
 		cornerRadius={ 2 }
 	/>
 )
 
-const field = (tags, mentions, text, children, Element, resolveContent) => (
+const field = (tags, mentions, texts, children, Element, resolveContent) => (
 	<Seed column
 		grow={ 1 } alignSelf='center' minWidth='12em'
 		margin={{ bottom: '1em' }}
 	>
-		<Seed children={ text } />
+		<Seed children={ texts } />
 		<Seed
 			grow={ 1 }
 			minHeight={ `1.4em` }
@@ -43,7 +44,7 @@ const textStyler = ({ link, small = false }) => seeds({
 	font: { size: small ? 12 : null }
 })
 
-const text = (tags, references, text, children, Element, resolveContent) => {
+const text = (tags, mentions, texts, children, Element, resolveContent) => {
 	const [Component, fontSize, textAlign] = (
 		R.has('primary', tags) ? (
 			['h1', '2em', 'center']
@@ -62,7 +63,7 @@ const text = (tags, references, text, children, Element, resolveContent) => {
 			alignSelf='center'
 			text={{ align: textAlign }}
 			font={{ size: fontSize }}
-			children={ resolveContent({ references, text }) }
+			children={ resolveContent({ mentions, texts }) }
 			{ ...textStyler(tags) }
 		/>
 	)

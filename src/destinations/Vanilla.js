@@ -18,11 +18,11 @@ import * as Swatch from './Swatch'
 import * as Distribution from './Distribution'
 import * as LayoutCalculator from './LayoutCalculator'
 
-export const isPassword = (tags, mentions, title) => (
-	R.has('password', tags) || R.test(/\bpassword\b/i, title)
+export const isPassword = (tags, texts) => (
+	R.has('password', tags) || R.any(R.test(/\bpassword\b/i), texts)
 )
 
-export const field = (tags, mentions, title, children, Element, resolveContent) => {
+export const field = (tags, mentions, texts, children, Element, resolveContent) => {
 	let value = null
 	let onChange
 	if (R.has('value', tags)) {
@@ -42,9 +42,9 @@ export const field = (tags, mentions, title, children, Element, resolveContent) 
 		<Seed Component='label' column
 			alignSelf='center'
 		>
-			<span key='label' children={ title } style={{ display: 'block' }} />
+			<span key='label' children={ texts } style={{ display: 'block' }} />
 			<input key='input'
-				type={ isPassword(tags, title) ? 'password' : 'text' }
+				type={ isPassword(tags, texts) ? 'password' : 'text' }
 				value={ value }
 				onChange={ onChange }
 			/>
@@ -52,20 +52,20 @@ export const field = (tags, mentions, title, children, Element, resolveContent) 
 	)
 }
 
-export const button = (tags, mentions, title) => (
+export const button = (tags, mentions, texts) => (
 	<Seed Component='button'
 		shrink={ 0 } alignSelf='center'
 		margin={{ base: 'auto', bottom: '0.5rem' }}
 		maxWidth='20em'
-		children={ title }
+		children={ texts }
 	/>
 )
 export const cta = button
 
-function ChoiceSelect({ value, title, items }) {
+function ChoiceSelect({ value, texts, items }) {
 	return (
 		<label { ...seeds({ column: true }) }>
-			<span children={ title } style={{ display: 'block' }} />
+			<span children={ texts } style={{ display: 'block' }} />
 			<Seed Component='select'
 				value={ value }
 				shrink={ 0 }
@@ -73,9 +73,9 @@ function ChoiceSelect({ value, title, items }) {
 				font={{ size: 16 }}
 			>
 			{
-				items.map(({ text, tags }) => (
-					<option key={ text }
-						value={ text } children={ tags.title || text }
+				items.map(({ texts, tags }) => (
+					<option key={ texts }
+						value={ texts[0] } children={ tags.texts || texts }
 					/>
 				))
 			}
@@ -84,28 +84,28 @@ function ChoiceSelect({ value, title, items }) {
 	)
 }
 
-function ChoiceCheckbox({ value, title }) {
+function ChoiceCheckbox({ value, texts }) {
 	return (
 		<label { ...seeds({ text: { align: 'center' } }) }>
 			<input type='checkbox' value={ value } />
-			<span children={ title } />
+			<span children={ texts } />
 		</label>
 	)
 }
 
-export const choice = (tags, mentions, title, children, Element, resolveContent) => {
+export const choice = (tags, mentions, texts, children, Element, resolveContent) => {
 	const hasChildren = children.length > 0
 	if (hasChildren) {
 		return <ChoiceSelect
 			value={ tags.value }
-			title={ title }
+			texts={ texts }
 			items={ children }
 		/>
 	}
 	else {
 		return <ChoiceCheckbox
 			value={ tags.value }
-			title={ title }
+			texts={ texts }
 		/>
 	}
 }
@@ -113,6 +113,7 @@ export const choice = (tags, mentions, title, children, Element, resolveContent)
 const wrapForTags = (tags, resolveContent, element) => {
 	if (R.has('link', tags)) {
 		const url = resolveContent(tags.link)
+		console.log('#link', url, tags.link)
 		return (
 			<a href={ url } rel='nofollow' children={ element } />
 		)
@@ -132,7 +133,7 @@ const wrapInInline = R.curry((tags, element) => {
 	return element
 })
 
-export const text = (tags, references, content, children, Element, resolveContent) => {
+export const text = (tags, mentions, texts, children, Element, resolveContent) => {
 	const [Component, fontSize, textAlign] = (
 		R.has('primary', tags) ? (
 			['h1', '2em', 'center']
@@ -147,6 +148,8 @@ export const text = (tags, references, content, children, Element, resolveConten
 		)
 	)
 
+	console.log('#text', resolveContent({ mentions, texts }), texts)
+
 	return wrapForTags(
 		tags,
 		resolveContent,
@@ -159,7 +162,7 @@ export const text = (tags, references, content, children, Element, resolveConten
 				font={{ size: fontSize }}
 				children={
 					multilinedText(
-						resolveContent({ references, text: content }),
+						resolveContent({ mentions, texts }),
 						Component,
 						wrapInInline(tags)
 					)
@@ -169,24 +172,28 @@ export const text = (tags, references, content, children, Element, resolveConten
 	)
 }
 
+// Images
+
 const imageHeight = 150
 const imageBackground = { color: rgba.whiteValue(0, 0.1) }
 
-const placeholderImageContent = (tags, text, resolveContent) => (
+const placeholderImageContent = (tags, texts, resolveContent) => (
 	<Seed column justifyContent='center'
 			minHeight={ imageHeight }
 			font={{ style: 'italic' }}
 			background={ imageBackground }
-			children={ text }
+			children={ texts }
 		/>
 ) 
 
-const richImageContent = (tags, text, resolveContent) => {
+const richImageContent = (tags, texts, resolveContent) => {
 	if (R.has('unsplash', tags)) {
+		let category = resolveContent(tags['unsplash'])
+		category = category.length > 0 ? category[0] : null
 		return (
 			<UnsplashImage
-				category={ resolveContent(tags['unsplash']) }
-				text={ text }
+				category={ category }
+				texts={ texts }
 			/>
 		)
 	}
@@ -196,16 +203,16 @@ const richImageContent = (tags, text, resolveContent) => {
 				sha256={ resolveContent(tags['collected']) }
 				width={ whenPresent(resolveContent, tags['width']) }
 				height={ whenPresent(resolveContent, tags['height']) }
-				text={ text }
+				texts={ texts }
 			/>
 		)
 	}
 	else {
-		return placeholderImageContent(tags, text, resolveContent)
+		return placeholderImageContent(tags, texts, resolveContent)
 	}
 }
 
-export const imageMaker = (imageContent) => (tags, mentions, text, children, Element, resolveContent) => {
+export const imageMaker = (imageContent) => (tags, mentions, texts, children, Element, resolveContent) => {
 	return (
 		<Seed Component='figure' column
 			grow={ 1 } width='100%'
@@ -214,13 +221,13 @@ export const imageMaker = (imageContent) => (tags, mentions, text, children, Ele
 			children={(
 				wrapForTags(tags, resolveContent,
 					R.has('nocaption', tags) ? (
-						imageContent(tags, text, resolveContent)
+						imageContent(tags, texts, resolveContent)
 					) : ([
 						imageContent(tags, null, resolveContent),
 						<Seed key='caption' Component='figcaption'
 							text={{ lineHeight: '1.3' }}
 							font={{ style: 'italic' }}
-							children={ text }
+							children={ texts }
 						/>
 					])
 				)
@@ -232,7 +239,7 @@ export const imageMaker = (imageContent) => (tags, mentions, text, children, Ele
 export const image = imageMaker(richImageContent)
 export const placeholderImage = imageMaker(placeholderImageContent)
 
-export const video = (tags, mentions, content) => (
+export const video = (tags, mentions, texts) => (
 	<Seed Component='figure' column
 		grow={ 1 } alignItems='center' justifyContent='center'
 		width='100%' height={ 0 }
@@ -242,28 +249,28 @@ export const video = (tags, mentions, content) => (
 	/>
 )
 
-export const code = (tags, references, text, children, Element, resolveContent) => (
+export const code = (tags, mentions, texts, children, Element, resolveContent) => (
 	<Seed Component='pre'
 		maxWidth='100%'
 		overflow='scroll'
 	>
 		<Seed Component='code'
-			children={ resolveContent({ references, text }) }
+			children={ resolveContent({ mentions, texts }) }
 		/>
 	</Seed>
 )
 
 const isHiddenForTags = R.propSatisfies(Boolean, 'hidden')
 
-export const hidden = (tags, mentions, content) => (
+export const hidden = (tags, mentions, texts) => (
 	<noscript />
 )
 
-export const list = (tags, mentions, content, children, Element, resolveContent) => {
+export const list = (tags, mentions, texts, children, Element, resolveContent) => {
 	const Component = R.propEq('ordered', true, tags) ? 'ol' : 'ul'
 	return (
 		<Seed>
-			{ text(tags, mentions, content || '', children, Element, resolveContent) }
+			{ text(tags, mentions, texts || [], children, Element, resolveContent) }
 			<Seed Component={ Component }
 				
 			>
@@ -285,7 +292,7 @@ const columnsComponentForTags = R.cond([
 	[ R.T, R.always('div') ]
 ])
 
-export const columns = (tags, mentions, content, children, Element, resolveContent) => {
+export const columns = (tags, mentions, texts, children, Element, resolveContent) => {
 	const columnWidth = R.ifElse(
 		R.gt(R.__, 0), // Greater than 0
 		(number) => `${ 100.0 / number }%`,
@@ -338,7 +345,7 @@ export const columns = (tags, mentions, content, children, Element, resolveConte
 
 export const nav = columns
 
-export const record = (tags, mentions, text, children, Element, resolveContent) => {
+export const record = (tags, mentions, texts, children, Element, resolveContent) => {
 	if (mentions.length > 0) {
 		return (
 			<JSONComponent isDeserialized={ true } json={ mentions[0] } />
@@ -346,15 +353,15 @@ export const record = (tags, mentions, text, children, Element, resolveContent) 
 	}
 	else {
 		return (
-			<JSONComponent isDeserialized={ true } json={ text } />
+			<JSONComponent isDeserialized={ true } json={ texts } />
 		)
 	}
 }
 
 // import Frame from 'react-frame-component'
 
-// export const gist = (tags, references, text, children, Element, resolveContent) => (
-// 	<Frame head={ <script src={ resolveContent({ references, text }) + '.js' } /> } />
+// export const gist = (tags, mentions, texts, children, Element, resolveContent) => (
+// 	<Frame head={ <script src={ resolveContent({ mentions, texts }) + '.js' } /> } />
 // )
 
 export const extendTagConds = (conds) => R.pipe(

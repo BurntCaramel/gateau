@@ -1,8 +1,8 @@
 import R from 'ramda'
 import parseInt from 'lodash/parseInt'
+const { parseElement } = require('lofi')
 
 const rejectEmptyStrings = require('./rejectEmptyStrings')
-const parseElement = require('./parseElement')
 
 const addChildTo = R.curry((element, parent) => (
 	R.mergeWith(R.concat, parent, {

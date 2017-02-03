@@ -3,6 +3,8 @@ import React from 'react'
 import { Seed } from 'react-seeds'
 
 const resolveContentIn = R.curry(function resolveItemIn(source, path) {
+	//path = R.filter(R.isNil)
+	console.log('resolveContentIn', path, source)
 	path = R.insertAll(1, ['content'], path)
 	return R.path(path, source)
 })
@@ -19,7 +21,8 @@ const resolveContentUsing = (ingredients) => {
 		if (R.isNil(value)) {
 			return
 		}
-		else if (value.references != null && value.references.length > 0) {
+		else if (value.mentions != null && value.mentions.length > 0 && value.mentions[0] != null) {
+			console.log('MENTIONS', { set, alter })
 			if (set) {
 				R.forEach(
 					(item) => item.set(set),
@@ -27,22 +30,24 @@ const resolveContentUsing = (ingredients) => {
 				)
 			}
 			else if (alter) {
-				const path = value.references[0]
+				const path = value.mentions[0]
 				const variation = variationForPath(path)
 				console.log('altering variation', variation)
 				const innerPath = R.tail(path)
 				variation.adjustPath(innerPath, alter)
 			}
 			else {
-				const resolved = R.map(resolveIngredientReference, value.references)
+				console.log('RESOLVE', value.mentions)
+				const resolved = R.map(resolveIngredientReference, value.mentions)
+				console.log('RESOLVED', resolved)
 				if (resolved == null) {
 					return
 				}
 				return single ? resolved[0] : resolved
 			}
 		}
-		else if (value.text != null) {
-			return value.text
+		else if (value.texts != null) {
+			return value.texts
 		}
 		else {
 			return value
@@ -73,8 +78,8 @@ export const renderElement = ({ ingredients, elementRendererForTags }) => {
 				R.apply(R.mergeWith(R.merge)),
 				elementRendererForTags
 			),
-			R.prop('references'),
-			R.prop('text'),
+			R.prop('mentions'),
+			R.prop('texts'),
 			R.prop('children'),
 			(ignore) => Element, // Have to put in closure as it is currently being assigned
 			R.always(resolveContent),

@@ -24,7 +24,7 @@ const buttonTagsToClass = R.uncurryN(3, (resolveContent, contentIsTrue) => R.con
 	]
 ))
 
-export const button = (tags, mentions, title, children, Element, resolveContent) => {
+export const button = (tags, mentions, texts, children, Element, resolveContent) => {
 	const contentIsTrue = R.propSatisfies((value) => resolveContent(value, { single: true }) == true)
 
 	let Component = 'button'
@@ -50,7 +50,7 @@ export const button = (tags, mentions, title, children, Element, resolveContent)
 				maxWidth: '20em'
 			}) }
 			className={ buttonTagsToClass(resolveContent, contentIsTrue, tags) }
-			children={ title }
+			children={ texts }
 			onClick={ onClick }
 		/>
 	)
@@ -71,7 +71,7 @@ const panelTagsToClass = R.uncurryN(3, (resolveContent, contentIsTrue) => R.conv
 	]
 ))
 
-export const panel = (tags, mentions, text, children, Element, resolveContent) => {
+export const panel = (tags, mentions, texts, children, Element, resolveContent) => {
 	const contentIsTrue = R.propSatisfies((value) => resolveContent(value, true) == true)
 
 	return (
@@ -82,7 +82,7 @@ export const panel = (tags, mentions, text, children, Element, resolveContent) =
 			maxWidth='20em'
 		>
 			<div className='panel-heading'>
-				<h2 className='panel-title' children={ text } />
+				<h2 className='panel-title' children={ texts } />
 			</div>
 			<div className='panel-body'>
 			{
