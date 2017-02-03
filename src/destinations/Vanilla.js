@@ -23,7 +23,7 @@ export const isPassword = (tags, mentions, title) => (
 )
 
 export const field = (tags, mentions, title, children, Element, resolveContent) => {
-	let value = ''
+	let value = null
 	let onChange
 	if (R.has('value', tags)) {
 		value = resolveContent(tags.value)
