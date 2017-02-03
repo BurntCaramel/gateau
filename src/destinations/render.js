@@ -96,8 +96,8 @@ export const renderElement = ({ ingredients, elementRendererForTags }) => {
 
 export const DefaultSection = ({ children }) => (
 	<Seed Component='section'
-		column
-		margin={{ bottom: '2rem' }}
+		//column
+		margin={{ base: '2rem', top: 0 }}
 		children={ children }
 	/>
 )

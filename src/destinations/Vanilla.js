@@ -209,6 +209,7 @@ export const imageMaker = (imageContent) => (tags, mentions, text, children, Ele
 	return (
 		<Seed Component='figure' column
 			grow={ 1 } width='100%'
+			margin={ 0 }
 			text={{ align: 'center' }}
 			children={(
 				wrapForTags(tags, resolveContent,
