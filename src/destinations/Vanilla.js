@@ -56,7 +56,7 @@ export const button = (tags, mentions, texts) => (
 	<Seed Component='button'
 		shrink={ 0 } alignSelf='center'
 		margin={{ base: 'auto', bottom: '0.5rem' }}
-		maxWidth='20em'
+		//maxWidth='20em'
 		children={ texts }
 	/>
 )
@@ -69,7 +69,7 @@ function ChoiceSelect({ value, texts, items }) {
 			<Seed Component='select'
 				value={ value }
 				shrink={ 0 }
-				maxWidth='20em'
+				//maxWidth='20em'
 				font={{ size: 16 }}
 			>
 			{
