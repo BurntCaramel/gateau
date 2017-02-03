@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { extendObservable, observable, action, toJS } from 'mobx'
+import { observable, action, toJS } from 'mobx'
 
 import { parseInput } from '../parser'
 import validateContent, { transformerForType, stringRepresenterForType } from '../ingredients/validateContent'
@@ -69,37 +69,45 @@ function createObservableIngredientVariation(ingredient, {
 }
 
 function createObservableIngredient(target) {
-	return extendObservable(observable(target), {
+	return observable({
+		id: target.id,
+		type: target.type,
 		variations: target.variations.map(
 			R.curry(createObservableIngredientVariation)(target)
 		),
-		addVariation: action(function(variation) { 
-			target.variations.push(
-				createObservableIngredientVariation(target, variation)
+		addVariation: action.bound(function(variation) { 
+			this.variations.push(
+				createObservableIngredientVariation(this, variation)
 			)
 		}),
-		addNewVariation: action(function(variation) {
-			target.addVariation({
+		addNewVariation: action.bound(function(variation) {
+			this.addVariation({
 				rawContent: ''
 			})
 		}),
 		get flattenedResult() {
 			let flattened = {
-				type: target.type,
-				variationReference: R.last(target.variations)
+				type: this.type,
+				variationReference: R.last(this.variations)
 			}
 
-			if (target.type == 'json') {
-				flattened.content = target.variations.reduce((combined, { enabled, result }) => {
-					if (!enabled || result.content == null) {
+			if (this.type == 'json') {
+				flattened.content = this.variations.reduce((combined, variation) => {
+					// Use only if enabled
+					if (!variation.enabled) {
 						return combined
 					}
-
+					// Skip if no content
+					const result = variation.result
+					if (result.content == null) {
+						return combined
+					}
+					// Merge into combined JSON object
 					return Object.assign(combined, result.content)
 				}, {})
 			}
 			else {
-				const variation = R.findLast(R.propEq('enabled', true), target.variations)
+				const variation = R.findLast(R.propEq('enabled', true), this.variations)
 				if (variation) {
 					flattened.content = variation.result.content
 				}
@@ -118,7 +126,7 @@ export default function createObservableStateManager({
 	scenarios = [{}],
 	activeScenarioIndex = 0
 } = {}) {
-	return extendObservable({}, {
+	return observable({
 		content,
 		destinationID,
 		destinationDevice,
