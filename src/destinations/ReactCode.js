@@ -5,11 +5,13 @@ import seeds, { Seed } from 'react-seeds'
 import * as Vanilla from './Vanilla'
 import { renderTreeUsing } from './render'
 
+const backgroundColor = '#191919'
+
 const Code = ({ children, indent = 0 }) => (
 	<Seed Component='pre'
 		grow={ 1 } width='100%'
 		text={{ align: 'left', whitespace: 'pre-wrap', color: 'white' }}
-		background={{ color: '#191919' }}
+		background={{ color: backgroundColor }}
 	>
 	{ R.repeat('  ', indent) }
 	{ children }
@@ -84,7 +86,9 @@ function Master({ children, ingredients }) {
 	)(ingredients)
 
 	return (
-		<Seed>
+		<Seed
+			background={{ color: backgroundColor }}
+		>
 			<Code children={ `function Component({ ${ingredientIDs} }) {` } />
 			<Code children='return (' indent={ 1 } />
 		{
@@ -107,8 +111,5 @@ export const Preview = R.pipe(
 export const title = 'React Code'
 
 export function head() {
-	return (
-		<head>
-		</head>
-	)
+	return []
 }
