@@ -22,7 +22,26 @@ export const isPassword = (tags, texts) => (
 	R.has('password', tags) || R.any(R.test(/\bpassword\b/i), texts)
 )
 
-export const field = (tags, mentions, texts, children, Element, resolveContent) => {
+const Label = ({ label, wrapperClassName, wrapInDiv = true, children }) => (
+	wrapInDiv ? (
+		<div
+				className={ wrapperClassName }
+			>
+			<label key='label' children={ label } style={{ display: 'block' }} />
+			{ children }
+		</div>
+	) : (
+		<label
+			{ ...seeds({ column: true, alignSelf: 'center' }) }
+			className={ wrapperClassName }
+		>
+			<span key='label' children={ label } style={{ display: 'block' }} />
+			{ children }
+		</label>
+	)
+)
+
+export const makeField = ({ wrapperClassName, wrapInDiv = true }) => (tags, mentions, texts, children, Element, resolveContent) => {
 	let value = null
 	let onChange
 	if (R.has('value', tags)) {
@@ -39,18 +58,21 @@ export const field = (tags, mentions, texts, children, Element, resolveContent) 
 	}
 
 	return (
-		<Seed Component='label' column
-			alignSelf='center'
+		<Label
+			label={ texts }
+			wrapInDiv={ wrapInDiv }
+			wrapperClassName={ wrapperClassName }
 		>
-			<span key='label' children={ texts } style={{ display: 'block' }} />
 			<input key='input'
 				type={ isPassword(tags, texts) ? 'password' : 'text' }
 				value={ value }
 				onChange={ onChange }
 			/>
-		</Seed>
+		</Label>
 	)
 }
+
+export const field = makeField({})
 
 export const button = (tags, mentions, texts) => (
 	<Seed Component='button'
@@ -62,15 +84,17 @@ export const button = (tags, mentions, texts) => (
 )
 export const cta = button
 
-function ChoiceSelect({ value, texts, items }) {
+function ChoiceSelect({ value, texts, items, disabled = false, wrapInDiv, wrapperClassName }) {
 	return (
-		<label { ...seeds({ column: true }) }>
-			<span children={ texts } style={{ display: 'block' }} />
-			<Seed Component='select'
+		<Label
+			label={ texts }
+			wrapInDiv={ wrapInDiv }
+			wrapperClassName={ wrapperClassName }
+		>
+			<select
 				value={ value }
-				shrink={ 0 }
-				//maxWidth='20em'
-				font={{ size: 16 }}
+				disabled={ disabled }
+				style={{ fontSize: 16 }}
 			>
 			{
 				items.map(({ texts, tags }) => (
@@ -79,36 +103,52 @@ function ChoiceSelect({ value, texts, items }) {
 					/>
 				))
 			}
-			</Seed>
-		</label>
+			</select>
+		</Label>
 	)
 }
 
-function ChoiceCheckbox({ value, texts }) {
-	return (
+function ChoiceCheckbox({ value, texts, disabled = false, wrapInDiv, wrapperClassName }) {
+	const label = (
 		<label { ...seeds({ text: { align: 'center' } }) }>
-			<input type='checkbox' value={ value } />
+			<input type='checkbox' value={ value } disabled={ disabled } />
 			<span children={ texts } />
 		</label>
 	)
+
+	return (
+		wrapInDiv ? (
+			<div className={ wrapperClassName }>{ label }</div>
+		) : (
+			label
+		)
+	)
 }
 
-export const choice = (tags, mentions, texts, children, Element, resolveContent) => {
+export const makeChoice = ({ wrapInDiv = true, wrapperClassName }) => (tags, mentions, texts, children, Element, resolveContent) => {
 	const hasChildren = children.length > 0
 	if (hasChildren) {
 		return <ChoiceSelect
 			value={ tags.value }
 			texts={ texts }
 			items={ children }
+			disabled={ R.has('disabled', tags) }
+			wrapperClassName={ wrapperClassName.select }
+			wrapInDiv={ wrapInDiv }
 		/>
 	}
 	else {
 		return <ChoiceCheckbox
 			value={ tags.value }
 			texts={ texts }
+			disabled={ R.has('disabled', tags) }
+			wrapperClassName={ wrapperClassName.checkbox }
+			wrapInDiv={ wrapInDiv }
 		/>
 	}
 }
+
+export const choice = makeChoice({})
 
 const wrapForTags = (tags, resolveContent, element) => {
 	if (R.has('link', tags)) {

@@ -68,9 +68,7 @@ dd {
 `
 
 export function head() {
-	return (
-		<head>
-			<style children={ styleSheet } />
-		</head>
-	)
+	return [
+		<style children={ styleSheet } />
+	]
 }
