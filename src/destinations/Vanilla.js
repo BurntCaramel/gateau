@@ -332,12 +332,22 @@ const columnsComponentForTags = R.cond([
 	[ R.T, R.always('div') ]
 ])
 
-export const columns = (tags, mentions, texts, children, Element, resolveContent) => {
-	const columnWidth = R.ifElse(
+const widthForColumns = R.pipe(
+	(input) => parseInt(input, 10),
+	R.ifElse(
 		R.gt(R.__, 0), // Greater than 0
 		(number) => `${ 100.0 / number }%`,
 		R.always(null)
-	)(parseInt(resolveContent(tags.columns), 10))
+	)
+)
+
+export const columns = (tags, mentions, texts, children, Element, resolveContent) => {
+	const columnWidth = widthForColumns(
+		R.when(
+			R.equals(true),
+			R.always(children.length)
+		)(resolveContent(tags.columns))
+	)
 
 	const renderColumn = (props) => (
 		<div style={{ flexBasis: columnWidth }}>
