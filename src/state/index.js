@@ -1,12 +1,14 @@
 import R from 'ramda'
-import { observable, action, toJS } from 'mobx'
+import { observable, extendObservable, action, toJS } from 'mobx'
 
 import { parseInput } from '../parser'
 import validateContent, { transformerForType, stringRepresenterForType } from '../ingredients/validateContent'
 
 const suggestReferenceFromTree = R.uncurryN(2, (ingredients) => R.pipe(
-	R.chain(R.pluck('references')),
+	R.chain(R.pluck('mentions')),
+	R.tap(mentions => console.log('mentions for suggestion', mentions)),
 	R.unnest,
+	R.reject(R.isNil),
 	R.map(R.head), // Just the requested ingredient ID
 	R.difference(R.__, R.pluck('id', ingredients)), // Only IDs that are yet to be used
 	R.head // First pick
@@ -69,12 +71,9 @@ function createObservableIngredientVariation(ingredient, {
 }
 
 function createObservableIngredient(target) {
-	return observable({
+	const ingredient = observable({
 		id: target.id,
 		type: target.type,
-		variations: target.variations.map(
-			R.curry(createObservableIngredientVariation)(target)
-		),
 		addVariation: action.bound(function(variation) { 
 			this.variations.push(
 				createObservableIngredientVariation(this, variation)
@@ -116,6 +115,14 @@ function createObservableIngredient(target) {
 			return flattened
 		}
 	})
+
+	extendObservable(ingredient, {
+		variations: target.variations.map(
+			R.curry(createObservableIngredientVariation)(ingredient)
+		)
+	})
+
+	return ingredient
 }
 
 export default function createObservableStateManager({
@@ -166,10 +173,11 @@ export default function createObservableStateManager({
 			}
 		},
 		addNewIngredient: action.bound(function() {
+			const suggestedID = suggestReferenceFromTree(this.ingredients, this.contentTree)
 			this.ingredients.push(createObservableIngredient({
 				id: R.defaultTo(
 					'untitled',
-					suggestReferenceFromTree(this.ingredients, this.contentTree)
+					suggestedID
 				),
 				type: 'text',
 				variations: [
