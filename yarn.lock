@@ -3274,9 +3274,9 @@ lodash@^4.0.1, lodash@^4.14.1, lodash@^4.16.4, lodash@^4.17.2, lodash@^4.17.4, l
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-lofi@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/lofi/-/lofi-0.1.1.tgz#8a54066d148fd451cb66e7dfa275a26de9635e40"
+lofi@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/lofi/-/lofi-0.1.2.tgz#cb9b1f90848041cbdc3ef061c9902f7c0def4ea4"
   dependencies:
     ramda "^0.23.0"
 

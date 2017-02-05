@@ -1,6 +1,6 @@
 {
   "name": "gateau",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Design your content with live previewing",
   "main": "lib/Main.js",
   "module": "es/Main.js",
@@ -24,7 +24,7 @@
   "dependencies": {
     "creed": "^1.0.3",
     "lodash": "^4.14.1",
-    "lofi": "0.1.1",
+    "lofi": "0.1.2",
     "mobx": "^3.0.2",
     "mobx-react": "^4.1.0",
     "ramda": "^0.21.0",
