@@ -133,7 +133,7 @@ export const makeChoice = ({ wrapInDiv = true, wrapperClassName }) => (tags, men
 			texts={ texts }
 			items={ children }
 			disabled={ R.has('disabled', tags) }
-			wrapperClassName={ wrapperClassName.select }
+			wrapperClassName={ wrapperClassName && wrapperClassName.select }
 			wrapInDiv={ wrapInDiv }
 		/>
 	}
@@ -142,7 +142,7 @@ export const makeChoice = ({ wrapInDiv = true, wrapperClassName }) => (tags, men
 			value={ tags.value }
 			texts={ texts }
 			disabled={ R.has('disabled', tags) }
-			wrapperClassName={ wrapperClassName.checkbox }
+			wrapperClassName={ wrapperClassName && wrapperClassName.checkbox }
 			wrapInDiv={ wrapInDiv }
 		/>
 	}
@@ -187,9 +187,6 @@ export const text = (tags, mentions, texts, children, Element, resolveContent) =
 			['p', '1em', 'left']
 		)
 	)
-
-	console.log('#text', resolveContent({ mentions, texts }), texts)
-
 	return wrapForTags(
 		tags,
 		resolveContent,
