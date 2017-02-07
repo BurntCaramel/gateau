@@ -41,7 +41,7 @@ const Label = ({ label, wrapperClassName, wrapInDiv = true, children }) => (
 	)
 )
 
-export const makeField = ({ wrapperClassName, wrapInDiv = true }) => (tags, mentions, texts, children, Element, resolveContent) => {
+export const makeField = ({ wrapInDiv = true, wrapperClassName, inputClassName }) => (tags, mentions, texts, children, Element, resolveContent) => {
 	let value = null
 	let onChange
 	if (R.has('value', tags)) {
@@ -66,6 +66,7 @@ export const makeField = ({ wrapperClassName, wrapInDiv = true }) => (tags, ment
 			<input key='input'
 				type={ isPassword(tags, texts) ? 'password' : 'text' }
 				value={ value }
+				className={ inputClassName }
 				onChange={ onChange }
 			/>
 		</Label>
@@ -133,7 +134,7 @@ export const makeChoice = ({ wrapInDiv = true, wrapperClassName }) => (tags, men
 			texts={ texts }
 			items={ children }
 			disabled={ R.has('disabled', tags) }
-			wrapperClassName={ wrapperClassName && wrapperClassName.select }
+			wrapperClassName={ !!wrapperClassName ? wrapperClassName.select : null }
 			wrapInDiv={ wrapInDiv }
 		/>
 	}
@@ -142,7 +143,7 @@ export const makeChoice = ({ wrapInDiv = true, wrapperClassName }) => (tags, men
 			value={ tags.value }
 			texts={ texts }
 			disabled={ R.has('disabled', tags) }
-			wrapperClassName={ wrapperClassName && wrapperClassName.checkbox }
+			wrapperClassName={ !!wrapperClassName ? wrapperClassName.checkbox : null }
 			wrapInDiv={ wrapInDiv }
 		/>
 	}

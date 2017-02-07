@@ -96,6 +96,7 @@ export const panel = (tags, mentions, texts, children, Element, resolveContent) 
 }
 
 const elementRendererForTags = Vanilla.extendTagConds([
+	[ R.has('field'), R.curry(Vanilla.makeField({ wrapInDiv: true, wrapperClassName: 'form-group', inputClassName: 'form-control' })) ],
 	[ R.has('card'), R.curry(panel) ],
 	[ R.has('panel'), R.curry(panel) ],
 	[ R.has('button'), R.curry(button) ],
