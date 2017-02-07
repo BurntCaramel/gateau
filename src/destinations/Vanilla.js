@@ -42,7 +42,7 @@ const Label = ({ label, wrapperClassName, wrapInDiv = true, children }) => (
 )
 
 export const makeField = ({ wrapInDiv = true, wrapperClassName, inputClassName }) => (tags, mentions, texts, children, Element, resolveContent) => {
-	let value = null
+	let value
 	let onChange
 	if (R.has('value', tags)) {
 		value = resolveContent(tags.value)
