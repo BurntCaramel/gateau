@@ -1,6 +1,6 @@
 {
   "name": "gateau",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Design your content with live previewing",
   "main": "lib/Main.js",
   "module": "es/Main.js",
@@ -19,7 +19,8 @@
     "start": "nwb serve-react-app",
     "test": "nwb test",
     "test:coverage": "nwb test --coverage",
-    "test:watch": "nwb test --server"
+    "test:watch": "nwb test --server",
+		"prepublish": "yarn run build:lib"
   },
   "dependencies": {
     "creed": "^1.0.3",
