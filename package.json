@@ -20,7 +20,7 @@
     "test": "nwb test",
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server",
-		"prepublish": "yarn run build:lib"
+    "prepublish": "yarn run build:lib"
   },
   "dependencies": {
     "creed": "^1.0.3",
@@ -35,8 +35,7 @@
     "react-icons": "^2.2.1",
     "react-seeds": "^0.4.0-b5",
     "react-sow": "^0.3.0-b4",
-    "royal-piping": "^0.2.0",
-    "spectacle": "^2.0.0"
+    "royal-piping": "^0.2.0"
   },
   "devDependencies": {
     "nwb": "^0.14.1",
