@@ -1,6 +1,6 @@
 {
   "name": "gateau",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Design your content with live previewing",
   "main": "lib/Main.js",
   "module": "es/Main.js",
@@ -35,7 +35,7 @@
     "react-seeds": "^0.4.0-b5",
     "react-sow": "^0.3.0-b4",
     "royal-piping": "^0.2.0",
-    "spectacle": "^1.1.2"
+    "spectacle": "^2.0.0"
   },
   "devDependencies": {
     "nwb": "^0.14.1",
