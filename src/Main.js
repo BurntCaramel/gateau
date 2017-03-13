@@ -49,23 +49,18 @@ export default observer(React.createClass({
 	},
 
 	onClickDrag({ type, currentTarget, target, clientX }) {
-		if (type == 'mouseup') {
+		if (type === 'mouseup') {
 			this.dragging = false
 		}
-		else if (this.dragging || type == 'mousedown') {
-			if (type == 'mousemove') {
+		else if (this.dragging || type === 'mousedown') {
+			if (type === 'mousemove') {
 				currentTarget.scrollLeft += (this.mouseX - clientX)
 			}
 
-			if (type == 'mouseup') {
-				this.dragging = false
-			}
-			else {
-				// Only allow clicking on background
-				if (target.tagName == 'DIV') {
-					this.dragging = true
-					this.mouseX = clientX
-				}
+			// Only allow clicking on background
+			if (target.tagName === 'DIV') {
+				this.dragging = true
+				this.mouseX = clientX
 			}
 		}
 	},
