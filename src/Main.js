@@ -20,6 +20,7 @@ import createObservableState from './state'
 export default observer(React.createClass({
 	getDefaultProps() {
 		return {
+			autofocus: false,
 			showTree: false,
 			backgroundColor: '#191919'
 		}
@@ -42,7 +43,7 @@ export default observer(React.createClass({
 
 	onSetUpMainField(component) {
 		const el = findDOMNode(component)
-		if (el) {
+		if (!!el && this.props.autofocus) {
 			el.focus()
 		}
 	},
