@@ -6,7 +6,7 @@ function sizeTextAreaToFit(el) {
 	const { style } = el
 	style.height = '1px'
 
-	const measuredHeight = `${el.scrollHeight}px` 
+	const measuredHeight = `${ el.scrollHeight + el.offsetHeight - el.clientHeight }px` 
 	style.height = measuredHeight
 	style.resize = 'none'
 }
