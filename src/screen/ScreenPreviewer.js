@@ -3,14 +3,14 @@ import React from 'react'
 import seeds, { Seed } from 'react-seeds'
 import Frame from 'react-frame-component'
 
-import Button from '../../ui/Button'
-import Choice from '../../ui/Choice'
-import * as stylers from '../../stylers'
+import Button from '../ui/Button'
+import Choice from '../ui/Choice'
+import * as stylers from '../stylers'
+import destinations from '../destinations'
 
 const catchRenderErrors = false
 
 const iframeStyler = seeds({
-	//grow: 1,
 	height: 600,
 	border: 'none'
 })
@@ -71,7 +71,6 @@ export default function PreviewSection({
 	ingredients,
 	destinationID,
 	destinationDevice,
-	destinations,
 	onChangeDestination,
 	onPhoneDestination,
 	onFullDestination

@@ -21,7 +21,7 @@ export const previewColumn = ({ destinationDevice }) => ({
 	minWidth: 320,
 	maxWidth: (destinationDevice === 'phone') && 414,
 	margin: { right: 5 },
-	boxShadow: `0 0 10px ${ rgba.whiteValue(0, 0.333) }`
+	boxShadow: `0 0 2px ${ rgba.whiteValue(0, 0.444) }`
 })
 
 export const sourceField = ({

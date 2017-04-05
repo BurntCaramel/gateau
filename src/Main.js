@@ -5,15 +5,13 @@ import seeds, { Seed } from 'react-seeds'
 import { action } from 'mobx'
 import { observer } from 'mobx-react'
 
-import destinations from './destinations'
-
 import * as colors from './colors'
 import * as stylers from './stylers'
 import Button from './ui/Button'
 import Field from './ui/Field'
 import Choice from './ui/Choice'
 import IngredientsEditor from './sections/IngredientsEditor'
-import PreviewSection from './sections/preview'
+import ScreenPreviewer from './screen/ScreenPreviewer'
 
 import createObservableState from './state'
 
@@ -133,12 +131,11 @@ export default observer(React.createClass({
 						</pre>
 					</Seed>
 				}
-				<PreviewSection
+				<ScreenPreviewer
 					contentTree={ contentTree }
 					ingredients={ activeIngredients }
 					destinationID={ destinationID }
 					destinationDevice={ destinationDevice }
-					destinations={ destinations }
 					onChangeDestination={ this.onChangeDestination }
 					onPhoneDestination={ this.onPhoneDestination }
 					onFullDestination={ this.onFullDestination }
